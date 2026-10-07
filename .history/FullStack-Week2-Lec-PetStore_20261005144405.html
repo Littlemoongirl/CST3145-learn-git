@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+       <title>Vue.js Pet Depot</title>
+        <!-- Load Vue.js from a server (so no local file is needed) -->
+        <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
+        <!-- Load Font Awesome for icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" />
+    </head>
+    <body>
+    <div id="app">
+        <header>
+            <h1 v-text="sitename"></h1>
+            <button v-on:click='showCheckout'>
+                {{cartItemCount}}
+             
+                <span class="fa-solid fa-cart-shopping"></span> Checkout<br>
+               
+            </button>
+        </header>  
+        <main>
+            <div v-if='showProduct'>
+                <figure>
+                    <img v-bind:src="product.image">
+                </figure>
+                <h2 v-text="product.title"></h2>
+                <p v-html="product.description"></p>
+                <p>Price: {{product.price}}</p>
+                <p>Available stock: {{product.availableInventory - cartItemCount}}</p>
+                <!-- <button v-on:click="addToCart"
+                v-show='canAddToCart'>
+                    Add to cart
+                </button> -->
+               
+ 
+                <button v-on:click='addToCart' v-if='canAddToCart'>Add to cart</button>
+                <button disabled="disabled" v-else>Add to cart</button>
+            </div>
+            <div v-else>
+                <h2>Checkout</h2>
+                <p>
+                    <strong>First Name:</strong>
+                    <!-- This input field is bound to 'firstName' in the 'order' object -->
+                     <input v-model="order.firstName"/>
+                    </p>
+                    <p>
+                        <strong>Last Name:</strong>
+                        <!-- This input field is bound to 'lastName' in the 'order' object -->
+                         <input v-model="order.lastName"/>
+                        </p>
+                        <p><strong>Address:</strong> <input v-model="order.address"/></p>
+                        <p><strong>City:</strong> <input v-model="order.city"/></p>
+                        <p><strong>State:</strong>
+                            <select v-model="order.state">
+                                <option disabled value="">State</option>
+                                <option>AL</option>
+                                <option>AR</option>
+                                <option>CA</option>
+                                <option>NV</option>
+                            </select>
+                        </p>
+                        <p>
+                            <strong>Zip/Postal Code:</strong> <input v-model="order.zip"/>
+                        </p>
+                        <h2>Order Information</h2>
+                        <p>First Name: {{order.firstName}}</p>
+                        <p>Last Name: {{order.lastName}}</p>
+                        <p>Address: {{order.address}}</p>
+                        <p>City: {{order.city}}</p>
+                        <p>State: {{order.state}}</p>
+                        <p>Zip/Postal Code: {{order.zip}}</p>
+            </div>
+        </main>
+    </div>
+ 
+    <script type="text/javascript">
+        var webstore = new Vue({
+            el: '#app',
+            data: {
+                sitename: 'Vue.js Pet Depot',
+                product: {
+                    id: 1001,
+                    title: "Cat Food, 25lb bag",
+                    description: "A 25 pound bag of <em>irresistible</em>, " + "organic goodness for your cat.",
+                    price: 2000,
+                    image: "images/product-fullsize.png.avif",
+                    availableInventory: 5
+                },
+                cart: [],
+                showProduct: true,
+                order: {
+                    firstName: '',
+                    lastName: '',
+                    address: '',
+                    city: '',
+                    state: '',
+                    zip: ''
+                }
+            },
+            methods: {
+                addToCart() {
+                    this.cart.push(this.product.id);
+                    // console.log(this.cart)
+                },
+                showCheckout() {
+                    // console.log(this.showProduct);
+                    this.showProduct = this.showProduct ? false : true;
+                },
+            },
+            computed: {
+                cartItemCount() {
+                    return this.cart.length ;
+                },
+                canAddToCart() {
+                    return this.product.availableInventory > this.cartItemCount;
+                }
+            },
+            
+        });
+    </script>
+</body>
+</html>

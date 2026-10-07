@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+       <title>Vue.js Pet Depot</title>
+        <!-- Load Vue.js from a server (so no local file is needed) -->
+        <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
+    </head>
+    <body>
+        <!-- The element where Vue will mount -->
+         <div id="app"></div>
+         <header>
+            <h1 v-text="sitename"></h1>
+        </header>
+         <script type="text/javascript">
+                 let webstore = new Vue({ // The Vue instance
+                         el: '#app', // <=== Don't forget this comma // The 'option object': DOM mounting point
+                         data: { // the 'data' option
+                         // the key 'sitename' matches the value of 'v-text' earlier
+                         sitename: 'Vue.js Pet Depot',
+                         product: {
+                            id: 1001,
+                            title: "Cat Food, 25lb bag",
+                            description: "A 25 pound bag of <em>irresistible</em>," + "organic goodness for your cat.",
+                            price: 2000,
+                            image: "images/product-fullsize.png"
+                         }
+                       
+                        }
+
+                 });
+         </script>
+
+    </body>
+</html>
